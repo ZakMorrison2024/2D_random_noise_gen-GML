@@ -38,24 +38,28 @@ The `noise_2d_get` script generates 2D noise values and uses them to control ent
 
 ## Example Implementation
 
-### During **'Step Event'**: // call when spawning
 
-		- if valid_position  // Position checking for PX and PY
-		- noise_value = noise_get_2d(px, py, noise_scale, room_width, room_height); // Define noise_value
-		- if (noise_value > spawn_threshold) { // If noise_value exceeds the spawn threshold
-		- instance_create_depth(px,py,0,obj_spawn_entity); // Create your object
-		- spawned ++; // Increment spawn tally
-		- valid_position = false; // Reset position
-		- noise_value = 0; // Reset noise_value
-		- }
-		- else {valid_position = false; px = irandom(room_width); py = irandom(room_height);} // This is a loop break, incase noise_value doesn't exceed threshold, will find a new position in ROOM
-		- }
-
-  ### In the **'Create Event'**: // defining variables and what they do
+### In the **'Create Event'**: // defining variables and what they do
 
 - noise_scale = random_range(0.01, 0.02); // Adjust for larger/smaller clumps (I use random float to increase unpredictablity)
 - spawn_threshold = 0.4; // Adjust for density
 - noise_value = 0; // declarative
+
+
+
+### During **'Step Event'**: // call when spawning
+
+- if valid_position  // Position checking for PX and PY (declared in my generation scripts px == position_x, py == position_y
+- noise_value = noise_get_2d(px, py, noise_scale, room_width, room_height); // Define noise_value
+- if (noise_value > spawn_threshold) { // If noise_value exceeds the spawn threshold
+- instance_create_depth(px,py,0,obj_spawn_entity); // Create your object
+- spawned ++; // Increment spawn tally
+- valid_position = false; // Reset position
+- noise_value = 0; // Reset noise_value
+- }
+- else {valid_position = false; px = irandom(room_width); py = irandom(room_height);} // This is a loop break, incase noise_value doesn't exceed threshold, will find a new position in ROOM
+- }
+
 
 
 
